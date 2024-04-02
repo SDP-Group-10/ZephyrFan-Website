@@ -4,7 +4,6 @@ import { WarningTriangle } from 'iconoir-react'
 
 const QR = () => {
   const [code, setCode] = useState('')
-  const BASE_URL = 'http://10.124.45.193:8080?code='
   const [validPassword, setValidPassword] = useState(false)
 
   useEffect(() => {
