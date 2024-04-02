@@ -4,12 +4,12 @@ import { WarningTriangle } from 'iconoir-react'
 
 const QR = () => {
   const [code, setCode] = useState('')
-  const BASE_URL = 'http://10.124.45.193:8080?code='
+  const BASE_URL = 'https://demo.zephyrfan.live?code='
   const [validPassword, setValidPassword] = useState(false)
 
   useEffect(() => {
     setInterval(() => {
-      fetch('http://10.124.45.193:8080/getCode')
+      fetch('https://demo.zephyrfan.live/getCode')
         .then((response) => response.json())
         .then((data) => {
           console.log(data)
@@ -103,7 +103,7 @@ const QR = () => {
             }}>
             {code || 'no code set'}
           </p>
-          <button onClick={() => fetch('http://10.124.45.193:8080/resetCode')}>
+          <button onClick={() => fetch('https://demo.zephyrfan.live/resetCode')}>
             Reset
           </button>
         </div>
