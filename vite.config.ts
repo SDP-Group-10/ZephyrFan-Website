@@ -8,9 +8,5 @@ export default defineConfig(({ command }) => {
     base: '/',
   }
 
-  if (command !== 'serve') {
-    config.base = '/ZephyrFan-Website/'
-  }
-
   return config
 })
