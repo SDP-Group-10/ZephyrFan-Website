@@ -138,10 +138,10 @@ const Navbar = () => {
             height={32}
             onClick={() => setShowQR((prev) => !prev)}
           />
-
-          <a href="#">About</a>
         </div>
         <a
+          href="https://uoe-my.sharepoint.com/:p:/g/personal/s2238874_ed_ac_uk/EeBVqL62b_hPp5I-_eQUwsoBWQTllzq4KPCmU82BrReH7g?e=Copnlq"
+          target="_blank"
           style={{
             padding: '0.4rem 0.8rem',
             backgroundColor: 'white',
@@ -209,48 +209,50 @@ function App() {
                     </h1>
                   </Page>
                   <Page>
-                    <p>We are building</p>
+                    <p>Introducing the</p>
                     <h1 style={{ margin: 0, fontWeight: 500 }}>
-                      AI-powered
+                      AI-Powered
                       <br />
                       Smart Fan
                     </h1>
                   </Page>
                   <Page>
                     <PeaceHand />
-                    <h3 style={{ margin: 0 }}>Gesture tracking</h3>
+                    <h3 style={{ margin: 0 }}>Gesture Control</h3>
                     <p style={{ margin: 0 }}>
-                      Use your hands to control the fan from anywhere in the
-                      room. Customise your gestures on the companion app.
+                      Control the fan effortlessly with hand gestures from
+                      anywhere in the room. Customize your gesture commands
+                      using the companion app.
                     </p>
                     <br />
 
                     <FaceId />
-                    <h3 style={{ margin: 0 }}>Face tracking</h3>
+                    <h3 style={{ margin: 0 }}>Face Recognition</h3>
                     <p style={{ margin: 0 }}>
-                      Face tracking allows for accurate targetting and rejects
-                      any unwanted hand gestures that are not acompanied with
-                      line of sight with the fan.
+                      The fan's face recognition technology ensures precise
+                      targeting and ignores unintended gestures unless you're
+                      directly facing the fan.
                     </p>
 
                     <br />
 
                     <PerspectiveView />
-                    <h3 style={{ margin: 0 }}>Object detection</h3>
+                    <h3 style={{ margin: 0 }}>Multi-Person Comfort</h3>
                     <p style={{ margin: 0 }}>
-                      When sharing a room with many people, the fan will split
-                      its air flow to accomodate everyone in the room!
+                      Ideal for shared spaces, the fan's object detection
+                      feature adjusts airflow to accommodate everyone in the
+                      room comfortably.
                     </p>
                   </Page>
                   <Page>
-                    <h2 style={{ margin: 0 }}>Companion app</h2>
+                    <h2 style={{ margin: 0 }}>Companion App</h2>
                     <p style={{ margin: 0 }}>
-                      Customise your experience and control your fan from your
-                      phone.
+                      Personalize your experience and manage your Smart Fan with
+                      ease from your smartphone.
                     </p>
                     <img
                       src="./Phone.png"
-                      alt="phone"
+                      alt="Screenshot of companion app showing a fan and control buttons"
                       style={{ width: '50%' }}
                     />
                   </Page>
