@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import QRCode from 'react-qr-code'
+import { WarningTriangle } from 'iconoir-react'
 
 const QR = () => {
   const [code, setCode] = useState('')
   const BASE_URL = 'http://10.124.45.193:8080?code='
+  const [validPassword, setValidPassword] = useState(false)
 
   useEffect(() => {
     setInterval(() => {
@@ -16,10 +18,6 @@ const QR = () => {
     }, 5000)
   })
 
-  const resetCode = () => {
-    fetch('http://10.124.45.193:8080/resetCode')
-  }
-
   return (
     <div>
       <div
@@ -31,21 +29,59 @@ const QR = () => {
           display: 'flex',
           flexDirection: 'column',
           zIndex: 100,
-          padding: '3rem',
+          padding: '2rem',
           gap: '1rem',
           backdropFilter: 'blur(10px)',
           alignItems: 'center',
           borderRadius: '1rem',
           backgroundColor: 'rgba(133, 133, 133, 0.5)',
+          WebkitBackdropFilter: 'blur(10px)',
         }}>
+        <h3
+          style={{
+            color: 'white',
+            padding: '0.5rem',
+            borderRadius: '1rem',
+            gap: '0.5rem',
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: 0,
+          }}>
+          <WarningTriangle
+            width={24}
+            height={24}
+            color="white"
+            strokeWidth={2}
+          />{' '}
+          Admin area
+        </h3>
+        <input
+          type="password"
+          placeholder="Admin password"
+          style={{
+            padding: '0.5rem',
+            borderRadius: '1rem',
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            width: '100%',
+            border: 'none',
+          }}
+          onChange={(e) => {
+            if (e.target.value === 'group10') {
+              setValidPassword(true)
+            }
+          }}
+        />
         <div
           style={{
             padding: '1rem',
             backgroundColor: 'rgb(255, 255, 255)',
+            filter: `blur(${validPassword ? 0 : 7}px)`,
+            opacity: validPassword ? 1 : 0.5,
+            transition: 'filter 0.5s, opacity 0.5s',
           }}>
           <QRCode value={BASE_URL + code} accentHeight={0} />
         </div>
-
         <div
           style={{
             color: 'white',
@@ -56,6 +92,8 @@ const QR = () => {
             width: '100%',
             display: 'flex',
             justifyContent: 'space-between',
+            filter: `blur(${validPassword ? 0 : 10}px)`,
+            transition: 'filter 0.5s',
 
             alignItems: 'center',
           }}>

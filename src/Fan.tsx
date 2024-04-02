@@ -4,11 +4,11 @@ Command: npx gltfjsx@6.2.16 fan.gltf
 */
 
 import React, { useRef } from 'react'
-import { Html, Text, useGLTF, useScroll } from '@react-three/drei'
+import { Text, useGLTF, useScroll } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 
 export function Model(props: any) {
-  const { nodes, materials } = useGLTF('/fan.gltf') as any
+  const { nodes, materials } = useGLTF('./fan.gltf') as any
   const ref = useRef<any>()
   const data = useScroll()
   const lerp = (start: number, end: number, t: number) =>
@@ -21,16 +21,16 @@ export function Model(props: any) {
     if (ref.current) {
       ref.current.rotation.y = lerp(
         ref.current.rotation.y,
-        data.range(0, 1 / 6) * (-Math.PI / 8) - Math.PI / 4,
+        data.range(0, 1 / 5) * (-Math.PI / 8) - Math.PI / 4,
         0.1
       )
     }
 
     // change opacity of the metal material based on scroll position
     if (ref.current) {
-      const opacity = 1 - data.curve(2 / 6, 1 / 6) * 1.2
+      const opacity = Math.max(1 - data.curve(2 / 5, 1 / 5) * 1.2, 0.05)
 
-      setShowCameraLabel(data.visible(2 / 6, 1 / 6, 0))
+      setShowCameraLabel(data.visible(2 / 5, 1 / 5, 0))
 
       materials.Metal.transparent = true
       materials.Metal.opacity = opacity
@@ -52,99 +52,101 @@ export function Model(props: any) {
     }
 
     if (bladesRef.current) {
-      bladesRef.current.rotation.y += 0.1 * data.curve(4 / 6, 5 / 6)
+      bladesRef.current.rotation.y += 0.1 * data.curve(4 / 5, 2 / 5)
     }
   })
   return (
-    <group {...props} dispose={null} ref={ref}>
-      <mesh
-        geometry={nodes.Cylinder.geometry}
-        material={materials.Metal}
-        position={[-1.124, 0, 0.303]}
-        rotation={[0, 0.521, 0]}
-        scale={[4.679, 0.356, 4.679]}
-      />
-      <mesh
-        geometry={nodes.Cylinder001.geometry}
-        material={materials['Material.001']}
-        position={[-1.124, 0, 0.303]}
-        rotation={[Math.PI, -0.521, Math.PI]}
-        scale={[-4.577, -0.397, -4.577]}
-      />
-      {showCameraLabel && (
-        <Text
-          color="white"
-          fontSize={0.5}
-          position={[3.22, 15, 6.405]}
-          rotation={[0, Math.PI / 3, 0]}>
-          Integrated Camera
-        </Text>
-      )}
-      <mesh
-        geometry={nodes.Cylinder002.geometry}
-        material={materials.Metal}
-        position={[-1.124, 13.746, 0.303]}
-        rotation={[0, 0.521, 0]}
-        scale={[1, 0.635, 1]}
-      />
-      <mesh
-        geometry={nodes.Cylinder003.geometry}
-        material={materials['Material.005']}
-        position={[-1.124, 14.83, 0.303]}
-        rotation={[0, 0.521, 0]}
-        scale={[1, 0.358, 1]}
-      />
-      <mesh
-        geometry={nodes.Cube.geometry}
-        material={materials.Metal}
-        position={[-1.4, 16.673, -0.178]}
-        rotation={[0, 0.521, 0]}
-        scale={[1.854, 1.739, 3.093]}
-      />
-      <group
-        rotation={[-1.483, 0.051, 0.519]}
-        position={[0.493, 16.509, 3.165]}>
+    <group position={[1.9, -2.5, 0]} scale={[0.2, 0.2, 0.2]}>
+      <group {...props} dispose={null} ref={ref}>
         <mesh
-          geometry={nodes.Cylinder005.geometry}
-          material={materials['Material.007']}
-          scale={[0.729, 0.421, 0.727]}
-          ref={bladesRef}
+          geometry={nodes.Cylinder.geometry}
+          material={materials.Metal}
+          position={[-1.124, 0, 0.303]}
+          rotation={[0, 0.521, 0]}
+          scale={[4.679, 0.356, 4.679]}
+        />
+        <mesh
+          geometry={nodes.Cylinder001.geometry}
+          material={materials['Material.001']}
+          position={[-1.124, 0, 0.303]}
+          rotation={[Math.PI, -0.521, Math.PI]}
+          scale={[-4.577, -0.397, -4.577]}
+        />
+        {showCameraLabel && (
+          <Text
+            color="white"
+            fontSize={0.4}
+            position={[3.22, 15, 6.405]}
+            rotation={[0, Math.PI / 3, 0]}>
+            Integrated Camera
+          </Text>
+        )}
+        <mesh
+          geometry={nodes.Cylinder002.geometry}
+          material={materials.Metal}
+          position={[-1.124, 13.746, 0.303]}
+          rotation={[0, 0.521, 0]}
+          scale={[1, 0.635, 1]}
+        />
+        <mesh
+          geometry={nodes.Cylinder003.geometry}
+          material={materials['Material.005']}
+          position={[-1.124, 14.83, 0.303]}
+          rotation={[0, 0.521, 0]}
+          scale={[1, 0.358, 1]}
+        />
+        <mesh
+          geometry={nodes.Cube.geometry}
+          material={materials.Metal}
+          position={[-1.4, 16.673, -0.178]}
+          rotation={[0, 0.521, 0]}
+          scale={[1.854, 1.739, 3.093]}
+        />
+        <group
+          rotation={[-1.483, 0.051, 0.519]}
+          position={[0.493, 16.509, 3.165]}>
+          <mesh
+            geometry={nodes.Cylinder005.geometry}
+            material={materials['Material.007']}
+            scale={[0.729, 0.421, 0.727]}
+            ref={bladesRef}
+          />
+        </group>
+        <mesh
+          geometry={nodes.Cylinder004.geometry}
+          material={materials.Metal}
+          position={[0.674, 16.576, 3.436]}
+          rotation={[1.575, -0.003, -0.521]}
+          scale={[1.313, 1.873, 1.313]}
+        />
+        <mesh
+          geometry={nodes.Cylinder006.geometry}
+          material={materials['Metal.001']}
+          position={[0.919, 16.56, 3.863]}
+          rotation={[0, 0.521, 0]}
+        />
+        <mesh
+          geometry={nodes.Cylinder007.geometry}
+          material={materials.Metal}
+          position={[1.048, 16.547, 3.887]}
+          rotation={[1.572, -0.001, -0.521]}
+          scale={[6.983, 1.276, 6.983]}
+        />
+        <mesh
+          geometry={nodes.Cylinder008.geometry}
+          material={materials['Material.004']}
+          position={[1.611, 16.565, 5.069]}
+          rotation={[-1.571, 0, -2.621]}
+          scale={[-1, -0.055, -1]}
+        />
+        <mesh
+          geometry={nodes.Plane003.geometry}
+          material={materials['Material.008']}
+          position={[1.22, 16.575, 4.405]}
+          rotation={[-1.571, 0, 2.092]}
+          scale={0.459}
         />
       </group>
-      <mesh
-        geometry={nodes.Cylinder004.geometry}
-        material={materials.Metal}
-        position={[0.674, 16.576, 3.436]}
-        rotation={[1.575, -0.003, -0.521]}
-        scale={[1.313, 1.873, 1.313]}
-      />
-      <mesh
-        geometry={nodes.Cylinder006.geometry}
-        material={materials['Metal.001']}
-        position={[0.919, 16.56, 3.863]}
-        rotation={[0, 0.521, 0]}
-      />
-      <mesh
-        geometry={nodes.Cylinder007.geometry}
-        material={materials.Metal}
-        position={[1.048, 16.547, 3.887]}
-        rotation={[1.572, -0.001, -0.521]}
-        scale={[6.983, 1.276, 6.983]}
-      />
-      <mesh
-        geometry={nodes.Cylinder008.geometry}
-        material={materials['Material.004']}
-        position={[1.611, 16.565, 5.069]}
-        rotation={[-1.571, 0, -2.621]}
-        scale={[-1, -0.055, -1]}
-      />
-      <mesh
-        geometry={nodes.Plane003.geometry}
-        material={materials['Material.008']}
-        position={[1.22, 16.575, 4.405]}
-        rotation={[-1.571, 0, 2.092]}
-        scale={0.459}
-      />
     </group>
   )
 }

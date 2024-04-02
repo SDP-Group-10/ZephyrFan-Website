@@ -6,21 +6,32 @@ import { Model } from './Fan'
 import { Environment, Scroll, ScrollControls } from '@react-three/drei'
 import 'non.geist'
 import QR from './QR'
+import styled from 'styled-components'
+import {
+  IconoirProvider,
+  FaceId,
+  PeaceHand,
+  PerspectiveView,
+} from 'iconoir-react'
 
+// This code does not represent my abilities
+// Very much on a time crunch
+// I would have loved to make this more responsive and clean
+
+const PageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100vh;
+  width: 50%;
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+`
 const Page = ({ children }: { children: any }) => {
-  return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        gap: '1rem',
-        height: '100vh',
-        width: '50%',
-      }}>
-      {children}
-    </div>
-  )
+  return <PageWrapper>{children}</PageWrapper>
 }
 
 const MouseTilt = ({ children }: { children: any }) => {
@@ -89,11 +100,13 @@ const Person = ({
 
 const Navbar = () => {
   const [showQR, setShowQR] = useState(false)
+
   return (
     <div
       style={{
         maxWidth: '768px',
         margin: 'auto',
+        width: '100%',
       }}>
       <div
         style={{
@@ -102,6 +115,7 @@ const Navbar = () => {
           position: 'fixed',
           width: '100%',
           maxWidth: '768px',
+          padding: 'auto 100px',
           alignItems: 'center',
           justifyContent: 'space-between',
           zIndex: 100,
@@ -113,25 +127,33 @@ const Navbar = () => {
         <div
           style={{
             display: 'flex',
-            gap: '1rem',
+            gap: '2rem',
             alignItems: 'center',
+            paddingLeft: '1rem',
           }}>
-          <img src="/logo.svg" alt="logo" width={32} height={32} />
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <a href="#">Pitch</a>
-            <a href="#">About</a>
-          </div>
+          <img
+            src="./logo.svg"
+            alt="logo"
+            width={32}
+            height={32}
+            onClick={() => setShowQR((prev) => !prev)}
+          />
+
+          <a href="#">About</a>
         </div>
-        <button
-          onClick={() => setShowQR((prev) => !prev)}
+        <a
           style={{
-            padding: '0.5rem 1rem',
+            padding: '0.4rem 0.8rem',
             backgroundColor: 'white',
-            borderRadius: '1rem',
+            borderRadius: '10rem',
             border: 'none',
+            marginRight: '1rem',
+            color: 'black',
+            textDecoration: 'none',
+            cursor: 'pointer',
           }}>
-          Connect
-        </button>
+          Pitch
+        </a>
       </div>
       {showQR && <QR />}
     </div>
@@ -140,102 +162,125 @@ const Navbar = () => {
 function App() {
   return (
     <>
-      <Navbar />
-      <Canvas
-        style={{ height: '100vh', width: '100vw' }}
-        camera={{ position: [0, 0, 5] }}>
-        <ScrollControls pages={6} damping={0.1}>
-          <MouseTilt>
-            <Model position={[2, -2.5, 0]} scale={[0.2, 0.2, 0.2]} />
-          </MouseTilt>
-          <ambientLight />
-          <pointLight position={[10, 10, 10]} />
-          <ambientLight intensity={0.5} />
-          <Environment preset="sunset" />
+      <IconoirProvider
+        iconProps={{
+          color: '#AAAAAA',
+          strokeWidth: 1,
+          width: '1em',
+          height: '1em',
+        }}>
+        <Navbar />
+        <Canvas
+          style={{ height: '100vh', width: '100vw' }}
+          camera={{ position: [0, 0, 5] }}>
+          <ScrollControls pages={5} damping={0.1}>
+            <MouseTilt>
+              <Model />
+            </MouseTilt>
+            <ambientLight />
+            <pointLight position={[10, 10, 10]} />
+            <ambientLight intensity={0.5} />
+            <Environment preset="sunset" />
 
-          <Scroll></Scroll>
-          <Scroll html>
-            <div
-              style={{
-                width: '100vw',
-              }}>
+            <Scroll></Scroll>
+            <Scroll html>
               <div
                 style={{
-                  maxWidth: '768px',
-                  margin: 'auto',
-                  display: 'grid',
+                  width: '100vw',
                 }}>
-                <Page>
-                  <img src="/logo.svg" alt="logo" width={96} height={96} />
-                  <h1
-                    style={{
-                      color: 'white',
-                      fontFamily: 'Geist Variable',
-                      textAlign: 'left',
-                      margin: 0,
-                      fontSize: '5rem',
-                      fontWeight: 500,
-                    }}>
-                    ZephyrFan
-                  </h1>
-                </Page>
-                <Page>
-                  <p>We are building</p>
-                  <h1 style={{ margin: 0, fontWeight: 500, fontSize: '4rem' }}>
-                    AI-powered
+                <div
+                  style={{
+                    maxWidth: '768px',
+                    margin: 'auto',
+                    display: 'grid',
+                    padding: '1rem',
+                  }}>
+                  <Page>
+                    <img src="./logo.svg" alt="logo" width={96} height={96} />
+                    <h1
+                      style={{
+                        color: 'white',
+                        fontFamily: 'Geist Variable',
+                        textAlign: 'left',
+                        margin: 0,
+                        fontWeight: 500,
+                      }}>
+                      ZephyrFan
+                    </h1>
+                  </Page>
+                  <Page>
+                    <p>We are building</p>
+                    <h1 style={{ margin: 0, fontWeight: 500 }}>
+                      AI-powered
+                      <br />
+                      Smart Fan
+                    </h1>
+                  </Page>
+                  <Page>
+                    <PeaceHand />
+                    <h3 style={{ margin: 0 }}>Gesture tracking</h3>
+                    <p style={{ margin: 0 }}>
+                      Use your hands to control the fan from anywhere in the
+                      room. Customise your gestures on the companion app.
+                    </p>
                     <br />
-                    Smart Fan
-                  </h1>
-                </Page>
-                <Page>
-                  <h3 style={{ margin: 0 }}>Face tracking</h3>
-                  <p style={{ margin: 0 }}>
-                    Tempor eiusmod eu sint magna aute. Occaecat id consequat
-                    nostrud excepteur elit enim do. Eu ea enim cupidatat cillum
-                    anim ullamco sunt. Ut magna ut eu pariatur mollit in est
-                    voluptate magna eiusmod velit consequat ipsum.{' '}
-                  </p>
-                  <br />
 
-                  <h3 style={{ margin: 0 }}>Gesture tracking</h3>
-                  <p style={{ margin: 0 }}>
-                    Tempor eiusmod eu sint magna aute. Occaecat id consequat
-                    nostrud excepteur elit enim do. Eu ea enim cupidatat cillum
-                    anim ullamco sunt.{' '}
-                  </p>
+                    <FaceId />
+                    <h3 style={{ margin: 0 }}>Face tracking</h3>
+                    <p style={{ margin: 0 }}>
+                      Face tracking allows for accurate targetting and rejects
+                      any unwanted hand gestures that are not acompanied with
+                      line of sight with the fan.
+                    </p>
 
-                  <br />
+                    <br />
 
-                  <h3 style={{ margin: 0 }}>Object detection</h3>
-                  <p style={{ margin: 0 }}>
-                    Tempor eiusmod eu sint magna aute. Occaecat id consequat
-                    nostrud excepteur elit enim do.
-                  </p>
-                </Page>
-                <Page>
-                  <h2 style={{ margin: 0 }}>Companion app</h2>
-                  <p style={{ margin: 0 }}>
-                    Tempor eiusmod eu sint magna aute. Occaecat id consequat
-                    nostrud excepteur elit enim do. Eu ea enim cupidatat cillum
-                    anim ullamco sunt. Ut magna ut eu pariatur mollit in est
-                    voluptate magna eiusmod velit consequat ipsum.{' '}
-                  </p>
-                  <img src="/Phone.png" alt="phone" width={250} />
-                </Page>
-                <Page>
-                  <Person name="Tomas" role="Software" imgSrc="/tomas.jpeg" />
-                  <Person name="James" role="Hardware" imgSrc="/james.jpeg" />
-                  <Person name="Mika" role="Software" imgSrc="/mika.jpeg" />
-                  <Person name="Alex" role="Research" imgSrc="/alex.jpeg" />
-                  <Person name="Kaleb" role="Software" imgSrc="/kaleb.jpeg" />
-                  <Person name="Dan" role="Hardware" imgSrc="/dan.jpeg" />
-                  <Person name="Jago" role="Hardware" imgSrc="/jago.jpg" />
-                </Page>
+                    <PerspectiveView />
+                    <h3 style={{ margin: 0 }}>Object detection</h3>
+                    <p style={{ margin: 0 }}>
+                      When sharing a room with many people, the fan will split
+                      its air flow to accomodate everyone in the room!
+                    </p>
+                  </Page>
+                  <Page>
+                    <h2 style={{ margin: 0 }}>Companion app</h2>
+                    <p style={{ margin: 0 }}>
+                      Customise your experience and control your fan from your
+                      phone.
+                    </p>
+                    <img
+                      src="./Phone.png"
+                      alt="phone"
+                      style={{ width: '50%' }}
+                    />
+                  </Page>
+                  <Page>
+                    <Person name="Alex" role="Research" imgSrc="./alex.jpeg" />
+                    <Person name="Mika" role="Software" imgSrc="./mika.jpeg" />
+                    <Person
+                      name="Tomas"
+                      role="Software"
+                      imgSrc="./tomas.jpeg"
+                    />
+                    <Person
+                      name="Kaleb"
+                      role="Hardware"
+                      imgSrc="./kaleb.jpeg"
+                    />
+                    <Person
+                      name="James"
+                      role="Hardware"
+                      imgSrc="./james.jpeg"
+                    />
+                    <Person name="Dan" role="Hardware" imgSrc="./dan.jpeg" />
+                    <Person name="Jago" role="Hardware" imgSrc="./jago.jpg" />
+                  </Page>
+                </div>
               </div>
-            </div>
-          </Scroll>
-        </ScrollControls>
-      </Canvas>
+            </Scroll>
+          </ScrollControls>
+        </Canvas>
+      </IconoirProvider>
     </>
   )
 }
