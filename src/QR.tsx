@@ -8,7 +8,7 @@ const QR = () => {
 
   useEffect(() => {
     setInterval(() => {
-      fetch('http://10.124.45.193:8080/getCode')
+      fetch('http://10.126.13.69:8080/getCode')
         .then((response) => response.json())
         .then((data) => {
           console.log(data)
@@ -105,7 +105,7 @@ const QR = () => {
             }}>
             {code || 'no code set'}
           </p>
-          <button onClick={() => fetch('http://10.124.45.193:8080/resetCode')}>
+          <button onClick={() => fetch('http://10.126.13.69:8080/resetCode')}>
             Reset
           </button>
         </div>
